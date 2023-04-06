@@ -10,6 +10,8 @@ namespace paySimplex.Domain.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Status Status { get; set; }
+
+        public virtual User User { get; set; }
         public Chore()
         {
         }
