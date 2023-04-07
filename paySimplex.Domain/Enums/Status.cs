@@ -2,7 +2,7 @@
 
 namespace paySimplex.Domain.Enums
 {
-    internal enum Status
+    public enum Status
     {
         [Display(Name = "Scheduled")]
         Scheduled,
