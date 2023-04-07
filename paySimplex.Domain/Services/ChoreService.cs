@@ -52,7 +52,12 @@ namespace paySimplex.Domain.Services
 
         public void Insert(ChoreDTO choreDTO)
         {
+            if (InvalidFileSize(choreDTO.File))
+                throw new Exception();
+
             Chore data = new(choreDTO);
+
+
 
             _choreRepository.Insert(data);
         }
@@ -74,6 +79,15 @@ namespace paySimplex.Domain.Services
             Chore data = _choreRepository.GetById(id);
 
             _choreRepository.Delete(data);
+        }
+
+
+        public bool InvalidFileSize(string b64)
+        {
+            var fileSize = b64.Length;
+            var maxByteSize = 5000000; // 5MB
+
+            return fileSize > maxByteSize;
         }
     }
 }
