@@ -1,8 +1,9 @@
-﻿using paySimplex.Domain.Enums;
+﻿using paySimplex.Domain.DTOs;
+using paySimplex.Domain.Enums;
 
 namespace paySimplex.Domain.Models
 {
-    internal class Chore
+    public class Chore
     {
         public int Id { get; internal set; }
         public int UserId { get; set; }
@@ -14,6 +15,15 @@ namespace paySimplex.Domain.Models
         public virtual User User { get; set; }
         public Chore()
         {
+        }
+        public Chore(ChoreDTO choreDTO)
+        {
+            Id = choreDTO.Id;
+            UserId = choreDTO.UserId;
+            Name = choreDTO.Name;
+            StartDate = choreDTO.StartDate;
+            EndDate = choreDTO.EndDate;
+            Status = choreDTO.Status;
         }
     }
 }
