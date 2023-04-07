@@ -1,6 +1,6 @@
 ﻿namespace paySimplex.Domain.Models
 {
-    internal class User
+    public class User
     {
         public int Id { get; internal set; }
         public string Name { get; set; }
