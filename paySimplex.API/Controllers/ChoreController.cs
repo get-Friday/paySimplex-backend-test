@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using paySimplex.Domain.DTOs;
+using paySimplex.Domain.Enums;
 using paySimplex.Domain.Interfaces.Services;
 
 namespace paySimplex.API.Controllers
@@ -15,9 +16,14 @@ namespace paySimplex.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(
+            [FromQuery] int? userId,
+            [FromQuery] Status? status,
+            [FromQuery] DateTime? startDate,
+            [FromQuery] DateTime? endDate
+        )
         {
-            return Ok(_choreService.GetAll());
+            return Ok(_choreService.GetAll(userId, status, startDate, endDate));
         }
 
         [HttpGet("{id}")]
