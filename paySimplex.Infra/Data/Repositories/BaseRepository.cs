@@ -27,9 +27,9 @@ namespace paySimplex.Infra.Data.Repositories
             return _context.Set<TEntity>().Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>();
+            return _context.Set<TEntity>().AsQueryable();
         }
 
         public virtual void Delete(TEntity entity)
