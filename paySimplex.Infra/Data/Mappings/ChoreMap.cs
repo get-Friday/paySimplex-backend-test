@@ -9,30 +9,34 @@ namespace paySimplex.Infra.Data.Mappings
         public void Configure(EntityTypeBuilder<Chore> builder)
         {
             builder.ToTable("CHORES");
-            builder.HasKey(a => a.Id);
-            builder.Property(a => a.Id)
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id)
                 .HasColumnName("ID");
             builder
-                .Property(a => a.Name)
+                .Property(c => c.Name)
                 .HasColumnName("NAME")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(300)
                 .IsRequired();
             builder
-                .Property(a => a.StartDate)
+                .Property(c => c.StartDate)
                 .HasColumnName("START_DATE")
                 .HasColumnType("DATETIME")
                 .IsRequired();
             builder
-                .Property(a => a.EndDate)
+                .Property(c => c.EndDate)
                 .HasColumnName("END_DATE")
                 .HasColumnType("DATETIME")
                 .IsRequired();
             builder
-                .Property(a => a.Status)
+                .Property(c => c.Status)
                 .HasColumnName("STATUS")
                 .HasColumnType("INT")
                 .IsRequired();
+            builder
+                .Property(c => c.File)
+                .HasColumnName("FILE")
+                .HasColumnType("VARBINARY");
             builder
                 .HasOne<User>(a => a.User)
                 .WithMany()
