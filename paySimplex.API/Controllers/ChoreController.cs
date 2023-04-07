@@ -34,6 +34,14 @@ namespace paySimplex.API.Controllers
             return Ok(_choreService.GetById(id));
         }
 
+        [HttpGet("user/{id}")]
+        public IActionResult GetByUserId(
+            [FromRoute] int userId
+        )
+        {
+            return Ok(_choreService.GetByUserId(userId));
+        }
+
         [HttpPost]
         public IActionResult Insert(
             [FromBody] ChoreDTO choreDTO    
