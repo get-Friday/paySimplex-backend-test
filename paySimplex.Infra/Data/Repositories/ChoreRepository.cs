@@ -8,5 +8,9 @@ namespace paySimplex.Infra.Data.Repositories
         public ChoreRepository(PaySimplexDbContext context) : base(context)
         {
         }
+        public IEnumerable<Chore> GetByUserId(int userId)
+        {
+            return _context.Chores.Where(c => c.UserId == userId);
+        }
     }
 }
