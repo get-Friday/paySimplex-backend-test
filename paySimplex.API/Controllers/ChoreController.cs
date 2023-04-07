@@ -36,10 +36,10 @@ namespace paySimplex.API.Controllers
 
         [HttpGet("user/{id}")]
         public IActionResult GetByUserId(
-            [FromRoute] int userId
+            [FromRoute] int id
         )
         {
-            return Ok(_choreService.GetByUserId(userId));
+            return Ok(_choreService.GetByUserId(id));
         }
 
         [HttpPost]
