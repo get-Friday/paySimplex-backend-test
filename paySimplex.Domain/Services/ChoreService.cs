@@ -115,7 +115,22 @@ namespace paySimplex.Domain.Services
 
             chore.Status = status;
 
+            if ((int)status == 2)
+            {
+                // As the endpoint sets the task as finished it also changes its end date
+                chore.EndDate = DateTime.Now;
+            }
+
             _choreRepository.Update(chore);
+        }
+
+        public TimeSpan TimeInProgress(int id)
+        {
+            Chore data = _choreRepository.GetById(id);
+
+            TimeSpan timeInProgress = (data.EndDate - data.StartDate);
+
+            return timeInProgress;
         }
 
 
