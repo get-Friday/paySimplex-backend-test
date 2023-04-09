@@ -109,6 +109,15 @@ namespace paySimplex.Domain.Services
             _choreRepository.Delete(data);
         }
 
+        public void ChangeStatus(Status status, int id)
+        {
+            Chore chore = _choreRepository.GetById(id);
+
+            chore.Status = status;
+
+            _choreRepository.Update(chore);
+        }
+
 
         private static bool InvalidFileSize(string b64)
         {

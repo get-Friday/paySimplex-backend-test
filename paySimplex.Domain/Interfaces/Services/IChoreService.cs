@@ -11,5 +11,6 @@ namespace paySimplex.Domain.Interfaces.Services
         void Insert(ChoreDTO chore);
         void Update(ChoreDTO chore, int id);
         void Delete(int id);
+        void ChangeStatus(Status status, int id);
     }
 }
