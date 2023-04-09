@@ -35,6 +35,7 @@ namespace paySimplex.Infra.Data.Repositories
         public virtual void Delete(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
+            _context.SaveChanges();
         }
     }
 }
