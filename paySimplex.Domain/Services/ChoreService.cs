@@ -82,7 +82,7 @@ namespace paySimplex.Domain.Services
         }
 
 
-        public static bool InvalidFileSize(string b64)
+        private static bool InvalidFileSize(string b64)
         {
             var fileSize = b64.Length;
             var maxByteSize = 5000000; // 5MB
