@@ -52,12 +52,10 @@ namespace paySimplex.Domain.Services
 
         public void Insert(ChoreDTO choreDTO)
         {
-            if (InvalidFileSize(choreDTO.File))
+            if (choreDTO.File != null && InvalidFileSize(choreDTO.File))
                 throw new Exception();
 
             Chore data = new(choreDTO);
-
-
 
             _choreRepository.Insert(data);
         }
@@ -67,7 +65,7 @@ namespace paySimplex.Domain.Services
             Chore chore = _choreRepository.GetById(id);
 
             chore.Name = choreDTO.Name;
-            chore.StartDate = choreDTO.StartDate;
+            chore.StartDate = choreDTO.StartDate ??= DateTime.Now;
             chore.EndDate = choreDTO.EndDate;
             chore.Status = choreDTO.Status;
 
