@@ -71,5 +71,16 @@ namespace paySimplex.API.Controllers
 
             return StatusCode(StatusCodes.Status204NoContent);
         }
+
+        [HttpPatch("{id}/status/{status}")]
+        public IActionResult ChangeStatus(
+            [FromRoute] int id,    
+            [FromRoute] Status status
+        )
+        {
+            _choreService.ChangeStatus(status, id);
+
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
     }
 }
