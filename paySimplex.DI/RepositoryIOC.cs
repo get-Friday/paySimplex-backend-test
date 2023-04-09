@@ -11,7 +11,8 @@ namespace paySimplex.DI
         {
             return builder
                 .AddDbContext<PaySimplexDbContext>()
-                .AddScoped<IChoreRepository, ChoreRepository>();
+                .AddScoped<IChoreRepository, ChoreRepository>()
+                .AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
