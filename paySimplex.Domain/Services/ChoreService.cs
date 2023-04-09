@@ -1,5 +1,6 @@
 ﻿using paySimplex.Domain.DTOs;
 using paySimplex.Domain.Enums;
+using paySimplex.Domain.Exceptions;
 using paySimplex.Domain.Interfaces.Repositories;
 using paySimplex.Domain.Interfaces.Services;
 using paySimplex.Domain.Models;
@@ -19,7 +20,11 @@ namespace paySimplex.Domain.Services
             IQueryable<Chore> query = _choreRepository.GetAll();
 
             if (userId.HasValue)
+            {
                 query = query.Where(c => c.UserId == userId);
+                if (query == null)
+                   throw new EntityNotFoundException($"User number {userId} not found");
+            }
 
             if (status.HasValue)
                 query = query.Where(c => c.Status == status);
@@ -37,8 +42,12 @@ namespace paySimplex.Domain.Services
 
         public IList<ChoreDTO> GetByUserId(int userId)
         {
-            return _choreRepository
-                .GetByUserId(userId)
+            IEnumerable<Chore> data = _choreRepository.GetByUserId(userId);
+
+            if (data == null)
+                throw new EntityNotFoundException($"User number {userId} not found");
+
+            return data
                 .Select(c => new ChoreDTO(c))
                 .ToList();
         }
@@ -47,13 +56,19 @@ namespace paySimplex.Domain.Services
         {
             Chore data = _choreRepository.GetById(id);
 
+            if (data == null)
+                throw new EntityNotFoundException($"Chore number {id} not found");
+
             return new ChoreDTO(data);
         }
 
         public void Insert(ChoreDTO choreDTO)
         {
-            if (choreDTO.File != null && InvalidFileSize(choreDTO.File))
-                throw new Exception();
+            if (InvalidFileSize(choreDTO.File))
+                throw new InvalidFileSizeException("File to large for this operation");
+
+            if (InvalidStartEndDate(choreDTO.StartDate, choreDTO.EndDate))
+                throw new InvalidStartEndDateException("Invalid date: Start date is set after end date");
 
             Chore data = new(choreDTO);
 
@@ -64,10 +79,22 @@ namespace paySimplex.Domain.Services
         {
             Chore chore = _choreRepository.GetById(id);
 
+            if (chore == null)
+                throw new EntityNotFoundException($"Chore number {id} not found");
+
+            if (InvalidStartEndDate(choreDTO.StartDate, choreDTO.EndDate))
+                throw new InvalidStartEndDateException("Invalid date: Start date is set after end date");
+
             chore.Name = choreDTO.Name;
             chore.StartDate = choreDTO.StartDate ??= DateTime.Now;
             chore.EndDate = choreDTO.EndDate;
             chore.Status = choreDTO.Status;
+
+            if (InvalidFileSize(choreDTO.File))
+                throw new InvalidFileSizeException("File to large for this operation");
+
+            chore.File = choreDTO.File;
+
 
             _choreRepository.Update(chore);
         }
@@ -76,16 +103,27 @@ namespace paySimplex.Domain.Services
         {
             Chore data = _choreRepository.GetById(id);
 
+            if (data == null)
+                throw new EntityNotFoundException($"Chore {id} not found");
+
             _choreRepository.Delete(data);
         }
 
 
         private static bool InvalidFileSize(string b64)
         {
+            if (String.IsNullOrEmpty(b64))
+                return false;
+
             var fileSize = b64.Length;
             var maxByteSize = 5000000; // 5MB
 
             return fileSize > maxByteSize;
+        }
+
+        private static bool InvalidStartEndDate(DateTime? startDate, DateTime endDate)
+        {
+            return (startDate ?? DateTime.Now) > endDate;
         }
     }
 }
