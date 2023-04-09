@@ -9,7 +9,8 @@ namespace paySimplex.DI
         public static IServiceCollection RegisterServices(this IServiceCollection builder)
         {
             return builder
-                .AddScoped<IChoreService, ChoreService>();
+                .AddScoped<IChoreService, ChoreService>()
+                .AddScoped<IUserService, UserService>();
         }
     }
 }

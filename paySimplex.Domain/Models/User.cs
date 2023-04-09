@@ -1,4 +1,6 @@
-﻿namespace paySimplex.Domain.Models
+﻿using paySimplex.Domain.DTOs;
+
+namespace paySimplex.Domain.Models
 {
     public class User
     {
@@ -8,6 +10,13 @@
 
         public User()
         {
+        }
+
+        public User(UserDTO userDTO)
+        {
+            Id = userDTO.Id;
+            Name = userDTO.Name;
+            Email = userDTO.Email;
         }
     }
 }
