@@ -1,5 +1,6 @@
 ﻿using paySimplex.Domain.DTOs;
 using paySimplex.Domain.Enums;
+using System.Transactions;
 
 namespace paySimplex.Domain.Interfaces.Services
 {
@@ -11,5 +12,7 @@ namespace paySimplex.Domain.Interfaces.Services
         void Insert(ChoreDTO chore);
         void Update(ChoreDTO chore, int id);
         void Delete(int id);
+        void ChangeStatus(Status status, int id);
+        TimeSpan TimeInProgress(int id);
     }
 }
