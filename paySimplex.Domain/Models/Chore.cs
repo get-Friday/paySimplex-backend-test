@@ -22,7 +22,7 @@ namespace paySimplex.Domain.Models
             Id = choreDTO.Id;
             UserId = choreDTO.UserId;
             Name = choreDTO.Name;
-            StartDate = choreDTO.StartDate;
+            StartDate = choreDTO.StartDate ??= DateTime.Now;
             EndDate = choreDTO.EndDate;
             Status = choreDTO.Status;
         }
